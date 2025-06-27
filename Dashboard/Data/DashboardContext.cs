@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Dashboard.Models;
 using Dashboard.Models.DTOs;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Dashboard.Data
 {
@@ -22,10 +23,10 @@ namespace Dashboard.Data
         public virtual DbSet<Venta> Ventas { get; set; } = null!;
 
         // Agregar DTOs al DBSet para que EF mapee los resultados del SP
-        public DbSet<VentasPorMesDTO> VentasPorMesDTO { get; set; }
-        public DbSet<ProductosPorCategoriaDTO> ProductosPorCategoriaDTO { get; set; }
-        public DbSet<VentasPorEmpleadoDTO> VentasPorEmpleadoDTO { get; set; }
-        public DbSet<ComparacionVentasDTO> ComparacionVentasDTO { get; set; }
+        public DbSet<VentasPorMesDTO> VentasPorMesDTO { get; set; } = null!;
+        public DbSet<ProductosPorCategoriaDTO> ProductosPorCategoriaDTO { get; set; } = null!;
+        public DbSet<VentasPorEmpleadoDTO> VentasPorEmpleadoDTO { get; set; } = null!;
+        public DbSet<ComparacionVentasDTO> ComparacionVentasDTO { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) { }
 
@@ -94,6 +95,13 @@ namespace Dashboard.Data
                     .HasForeignKey(d => d.IdEmpleado)
                     .HasConstraintName("FK__Ventas__IdEmplea__173876EA");
             });
+
+            // Ignorar DTOs en migraciones: se configuran como entidades sin clave primaria y sin vista/tablas asociadas.
+            // Mapeo de DTOs usados para consultas por Stored Procedures
+            modelBuilder.Entity<VentasPorMesDTO>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ProductosPorCategoriaDTO>().HasNoKey().ToView(null);
+            modelBuilder.Entity<VentasPorEmpleadoDTO>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ComparacionVentasDTO>().HasNoKey().ToView(null);
 
             OnModelCreatingPartial(modelBuilder);
         }

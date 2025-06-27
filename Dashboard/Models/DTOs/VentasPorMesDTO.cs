@@ -2,7 +2,8 @@
 {
     public class VentasPorMesDTO
     {
-        public string Mes { get; set; }
+        // Inicializar string con string.Empty para evitar errores de null y advertencias del compilador
+        public string Mes { get; set; } = string.Empty;
         public decimal TotalVentas { get; set; }
     }
 }

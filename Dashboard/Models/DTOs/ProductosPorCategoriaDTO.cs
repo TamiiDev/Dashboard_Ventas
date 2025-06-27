@@ -2,7 +2,8 @@
 {
     public class ProductosPorCategoriaDTO
     {
-        public string Categoria { get; set; }
+        // Inicializar string con string.Empty para evitar errores de null y advertencias del compilador
+        public string Categoria { get; set; } = string.Empty;
         public int TotalVendidos { get; set; }
     }
 }
