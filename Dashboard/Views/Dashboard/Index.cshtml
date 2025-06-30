@@ -56,8 +56,17 @@
     <footer class="text-center p-3 border-top">
         &copy; @DateTime.Now.Year - Dashboard. Desarrollado por Tamara Vera.
     </footer>
+    <script>
+        // Inyectamos datos del ViewModel desde Razor a JS.
+        // Usamos Json.Serialize para convertir las listas a JSON válido y poder manejarlas del lado del cliente.
+        const ventasPorMes = @Html.Raw(Json.Serialize(Model.VentasPorMes));
+        const productosPorCategoria = @Html.Raw(Json.Serialize(Model.ProductosPorCategoria));
+        const ventasPorEmpleado = @Html.Raw(Json.Serialize(Model.VentasPorEmpleado));
+        const comparacionVentas = @Html.Raw(Json.Serialize(Model.ComparacionVentas));
+    </script>
     <!-- SCRIPT -->
     <script src="~/js/chart.js"></script>
+    <script src="~/js/chartjs-plugin-datalabels@2.js"></script>
     <script src="~/js/dashboard.js"></script>
 </body>
 </html>
